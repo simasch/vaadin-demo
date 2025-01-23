@@ -13,6 +13,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -44,14 +45,16 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
     private final BeanValidationBinder<Employee> binder = new BeanValidationBinder<>(Employee.class);
 
     private Employee employee;
+    private int version;
 
     public EmployeeView(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
         this.dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", getLocale());
 
-        addClassNames("master-detail-view");
-
+        setSizeFull();
         SplitLayout splitLayout = new SplitLayout();
+        splitLayout.setSizeFull();
+        splitLayout.setSplitterPosition(75);
         splitLayout.addToPrimary(createGrid());
         splitLayout.addToSecondary(createEditor());
 
@@ -78,7 +81,8 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
         }
     }
 
-    private Div createGrid() {
+    private Grid<Employee> createGrid() {
+        grid.setHeightFull();
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.setMultiSort(true);
 
@@ -93,19 +97,11 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
         grid.addSelectionListener(event -> event.getFirstSelectedItem()
                 .ifPresent(employee -> UI.getCurrent().navigate(EmployeeView.class, new RouteParam(ID, employee.getId()))));
 
-        Div wrapper = new Div();
-        wrapper.setClassName("grid-wrapper");
-        wrapper.add(grid);
-        return wrapper;
+        return grid;
     }
 
-    private Div createEditor() {
-        Div editorLayoutDiv = new Div();
-        editorLayoutDiv.setClassName("editor-layout");
-
-        Div editorDiv = new Div();
-        editorDiv.setClassName("editor");
-        editorLayoutDiv.add(editorDiv);
+    private VerticalLayout createEditor() {
+        VerticalLayout editorlayout = new VerticalLayout();
 
         FormLayout formLayout = new FormLayout();
 
@@ -135,10 +131,10 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
 
         formLayout.add(firstNameTextField, lastNameTextField, dateOfBirthDatePicker, emailField, phoneTextField);
 
-        editorDiv.add(formLayout);
-        editorLayoutDiv.add(createButtons());
+        editorlayout.add(formLayout);
+        editorlayout.add(createButtons());
 
-        return editorLayoutDiv;
+        return editorlayout;
     }
 
     private HorizontalLayout createButtons() {
@@ -166,7 +162,6 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
         });
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
-        buttonLayout.setClassName("button-layout");
         buttonLayout.add(saveButton, cancelButton);
 
         return buttonLayout;
