@@ -45,7 +45,6 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
     private final BeanValidationBinder<Employee> binder = new BeanValidationBinder<>(Employee.class);
 
     private Employee employee;
-    private int version;
 
     public EmployeeView(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
