@@ -15,7 +15,6 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
-import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.*;
@@ -122,7 +121,7 @@ public class EmployeeView extends Div implements BeforeEnterObserver {
         dateOfBirthDatePicker.setI18n(datePickerI18n);
         binder.forField(dateOfBirthDatePicker).bind("dateOfBirth");
 
-        EmailField emailField = new EmailField("Email");
+        TextField emailField = new TextField("Email");
         binder.forField(emailField).bind("email");
 
         TextField phoneTextField = new TextField("Phone");
