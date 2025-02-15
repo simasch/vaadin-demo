@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VaadinDemoApplication<vaadin-demo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "ch.martinelli.demo.vaadin.VaadinDemoApplication",
+            "projectName": "vaadin-demo",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
